@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { StyleSheet, View, FlatList, Alert } from "react-native";
+import { StyleSheet, View, FlatList, Alert, ScrollView } from "react-native";
 import Header from "./components/Header";
 import Addtodo from "./components/Addtodo";
 import Items from "./components/Items";
+import Footer from "./components/Footer";
 
 export default function App() {
   const [todos, setTodos] = useState([]);
@@ -51,6 +52,7 @@ export default function App() {
           />
         </View>
       </View>
+      <Footer />
     </React.Fragment>
   );
 }
@@ -62,8 +64,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   todos: {
-    marginTop: 50,
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 30,
   },
 });
