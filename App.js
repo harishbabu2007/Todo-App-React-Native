@@ -1,21 +1,69 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+import { StyleSheet, View, FlatList, Alert } from "react-native";
+import Header from "./components/Header";
+import Addtodo from "./components/Addtodo";
+import Items from "./components/Items";
 
 export default function App() {
+  const [todos, setTodos] = useState([]);
+  const [keys, setKeys] = useState(1);
+
+  const AddTodo = (text) => {
+    if (text.trim().length > 3) {
+      setTodos((prev) => {
+        return [
+          ...prev,
+          {
+            text: text.trim(),
+            key: keys,
+          },
+        ];
+      });
+      setKeys(keys + 1);
+    } else {
+      Alert.alert("OOPS!", "Todo has to be more than 3 chracters", [
+        {
+          text: "Understood",
+          onPress: () => {},
+        },
+      ]);
+    }
+  };
+
+  const DelteTodo = (key) => {
+    setTodos(todos.filter((item) => item.key !== key));
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <React.Fragment>
+      <Header />
+      <View style={styles.container}>
+        <Addtodo addFunc={AddTodo} />
+        <View style={styles.todos}>
+          <FlatList
+            data={todos}
+            keyExtractor={(item) => item.key}
+            renderItem={({ item }) => {
+              return (
+                <Items text={item.text} keyid={item.key} delfunc={DelteTodo} />
+              );
+            }}
+          />
+        </View>
+      </View>
+    </React.Fragment>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#2C3E50",
+    alignItems: "center",
+  },
+  todos: {
+    marginTop: 50,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
