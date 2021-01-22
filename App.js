@@ -67,5 +67,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 30,
+    flex: 1,
+    flexDirection: "column-reverse",
   },
 });
